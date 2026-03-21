@@ -12,7 +12,7 @@ source:
     - cmake_fix_2.4.1.patch
 
 build:
-  number: 0
+  number: 1
   run_exports:
     # Hasn't been updated in years so pin tightly
     - {{ pin_subpackage('ftgl', max_pin='x.x.x') }}
@@ -27,25 +27,21 @@ requirements:
     - cmake
     # Required for OpenGL support
     # See https://conda-forge.org/docs/maintainer/knowledge_base.html?highlight=cdt#libgl
-    - {{ cdt('mesa-libgl-devel') }}  # [linux]
-    - {{ cdt('mesa-dri-drivers') }}  # [linux]
-    - {{ cdt('libselinux') }}  # [linux]
-    - {{ cdt('libxdamage') }}  # [linux]
-    - {{ cdt('libxxf86vm') }}  # [linux]
   host:
     - xorg-libxfixes  # [linux]
     - libglu  # [linux]
     - freetype
+    - libgl-devel                    # [linux]
 
   run:
     - libglu  # [linux]
     - freetype
-            
+
 
 test:
-   commands:
-     - test -f $PREFIX/lib/libftgl$SHLIB_EXT  # [unix]
-     - if not exist %LIBRARY_LIB%\ftgl.lib exit 1  # [win]
+  commands:
+    - test -f $PREFIX/lib/libftgl$SHLIB_EXT   # [unix]
+    - if not exist %LIBRARY_LIB%\ftgl.lib exit 1   # [win]
 
 about:
   home: https://github.com/frankheckenbach/ftgl
@@ -54,7 +50,7 @@ about:
   license_file: COPYING
   summary: 'Use Freetype2 to simplify rendering fonts in OpenGL applications'
   description: |
-      FTGL is a free cross-platform Open Source C++ library that uses Freetype2 to simplify rendering fonts in OpenGL applications. FTGL supports bitmaps, pixmaps, texture maps, outlines, polygon mesh, and extruded polygon rendering modes.
+    FTGL is a free cross-platform Open Source C++ library that uses Freetype2 to simplify rendering fonts in OpenGL applications. FTGL supports bitmaps, pixmaps, texture maps, outlines, polygon mesh, and extruded polygon rendering modes.
 
 extra:
   recipe-maintainers:
