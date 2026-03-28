@@ -1,16 +1,15 @@
+@echo on
 setlocal EnableDelayedExpansion
 
 :: Configure using the CMakeFiles
-cmake -G "NMake Makefiles" ^
-      -DCMAKE_INSTALL_PREFIX:PATH="%LIBRARY_PREFIX%" ^
-      -DCMAKE_PREFIX_PATH:PATH="%LIBRARY_PREFIX%" ^
+cmake -S %SRC_DIR% -B build -G "Ninja" ^
       -DBUILD_SHARED_LIBS=ON ^
       -DCMAKE_BUILD_TYPE:STRING=Release ^
-      -S . -B build
+      %CMAKE_ARGS%
 if errorlevel 1 exit 1
 
 :: Build!
-cmake --build build
+cmake --build build -j %CPU_COUNT%
 if errorlevel 1 exit 1
 
 :: Install!

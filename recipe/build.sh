@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Enable bash strict mode
-# http://redsymbol.net/articles/unofficial-bash-strict-mode/
-set -ex
 
-cmake ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} -DCMAKE_BUILD_TYPE=Release -S . -B build 
+set -o xtrace -o nounset -o pipefail -o errexit
 
-cmake --build build
+cmake -B build -S ${SRC_DIR} -G Ninja \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+    -G Ninja -DCMAKE_BUILD_TYPE=Release ${CMAKE_ARGS} 
 
+cmake --build build -j ${CPU_COUNT}
 cmake --install build
